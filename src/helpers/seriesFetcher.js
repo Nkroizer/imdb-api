@@ -28,7 +28,7 @@ export default async function seriesFetcher(id) {
           episodes: [],
         };
         seasons.push(season);
-      } catch (_) {}
+      } catch (_) { }
     }
 
     allSeasons = [...seasons];
@@ -61,7 +61,7 @@ export default async function seriesFetcher(id) {
       delete s.isSelected;
       return s;
     });
-  } catch (error) {}
+  } catch (error) { }
 
   return {
     all_seasons: allSeasons.map((s) => ({
@@ -82,79 +82,45 @@ export function parseEpisodes(raw, seasonId) {
 
   let episodes = [];
 
-  let item = dom.getElementsByClassName("list_item");
+let episodeList = dom.getElementsByClassName("episode-item-wrapper")
 
-  item.forEach((node, index) => {
+  let index = 0
+
+  for (let item of episodeList) {
+    console.log("_________________________")
+    let iit = item.innerText.replace("TOP-RATED\n", "").replace(" ∙ ", "\n");
+    let iita = iit.split("\n")
     try {
-      let image = null;
-      let image_large = null;
-      try {
-        image = node.getElementsByTagName("img")[0];
-        image = image.getAttribute("src");
-        image_large = image.replace(/[.]_.*_[.]/, ".");
-      } catch (_) {}
-
-      let noStr = null;
-      try {
-        // noStr = node.getElementsByClassName("image")[0].textContent.trim();
-        noStr = `S${seasonId}, Ep${index + 1}`;
-      } catch (_) {}
-
-      let publishedDate = null;
-      try {
-        publishedDate = node
-          .getElementsByClassName("airdate")[0]
-          .textContent.trim();
-      } catch (_) {}
-
       let title = null;
       try {
-        title = node.getElementsByTagName("a");
-        title = title.find((t) => t.getAttribute("itemprop") === "name");
-        title = title.textContent.trim();
-        title = entityDecoder(title, { level: "html5" });
-      } catch (_) {}
-
+        title = iita[1]
+      } catch (_) { }
+  
+      let publishedDate = null;
+      try {
+        publishedDate = iita[2]
+      } catch (_) { }
+  
       let plot = null;
       try {
-        plot = node.getElementsByTagName("div");
-        plot = plot.find((t) => t.getAttribute("itemprop") === "description");
-        plot = plot.textContent.trim();
-        plot = entityDecoder(plot, { level: "html5" });
-      } catch (_) {}
-
+        plot = iita[3]
+      } catch (_) { }
+  
       let star = 0;
       try {
-        star = node
-          .getElementsByClassName("ipl-rating-star__rating")[0]
-          .textContent.trim();
-        star = parseFloat(star);
-      } catch (_) {}
-
+        star = iita[4]
+      } catch (_) { }
+  
       let count = 0;
       try {
-        count = node
-          .getElementsByClassName("ipl-rating-star__total-votes")[0]
-          .textContent.trim();
-        count = count.replace(/[(]|[)]|,|[.]/g, "");
-        count = parseInt(count);
-      } catch (_) {}
-
-  if (image?.includes("spinning-progress.gif")) {
-    image = null;
-    image_large = null;
-  }
-
-  if (plot.includes("Know what this is about")) {
-   plot = null;
-  }
-
+        count = trim(iita[6]).replace("(", "").replace(")", "");
+      } catch (_) { }
+  
+      index++
+  
       episodes.push({
         idx: index + 1,
-        no: noStr,
-        title,
-        image,
-        image_large,
+        no: title,
         plot,
         publishedDate,
         rating: {
@@ -165,10 +131,12 @@ export function parseEpisodes(raw, seasonId) {
     } catch (ss) {
       console.log(ss.message);
     }
-  });
+  }
 
   return {
     name: name,
     episodes: episodes,
   };
 }
+
+
