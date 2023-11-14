@@ -113,7 +113,8 @@ let episodeList = dom.getElementsByClassName("episode-item-wrapper")
   
       let count = 0;
       try {
-        count = trim(iita[6]).replace("(", "").replace(")", "");
+        count = iita[6] && iita[6].includes("(") ? trim(iita[6]).replace("(", "") : trim(iita[6]);
+        count = iita[6] && iita[6].includes(")") ? trim(iita[6]).replace(")", "") : trim(iita[6]);
       } catch (_) { }
   
       index++
