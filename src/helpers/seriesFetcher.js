@@ -140,11 +140,14 @@ export function parseEpisodes(raw, seasonId) {
         count = parseInt(count);
       } catch (_) {}
 
-      if (
-        image.includes(`spinning-progress.gif`) &&
-        plot.includes("Know what this is about")
-      )
-        return null;
+  if (image?.includes("spinning-progress.gif")) {
+    image = null;
+    image_large = null;
+  }
+
+  if (plot.includes("Know what this is about")) {
+   plot = null;
+  }
 
       episodes.push({
         idx: index + 1,
