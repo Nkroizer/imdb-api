@@ -5,7 +5,7 @@ export default async function userInfo(c) {
 
   try {
     const userId = c.req.param("id");
-    const response = await fetch(`https://www.imdb.com/user/${userId}`, {
+    const response = await fetch(`https://www.m.imdb.com/user/${userId}`, {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
@@ -79,7 +79,7 @@ export default async function userInfo(c) {
     const result = Object.assign(
       {
         id: userId,
-        imdb: `https://www.imdb.com/user/${userId}`,
+        imdb: `https://www.m.imdb.com/user/${userId}`,
         ratings_api_path: `/user/${userId}/ratings`,
       },
       data

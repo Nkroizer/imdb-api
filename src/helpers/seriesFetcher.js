@@ -11,7 +11,7 @@ export default async function seriesFetcher(id) {
   try {
     let parser = new DomParser();
     let rawHtml = await apiRequestRawHtml(
-      `https://www.imdb.com/title/${id}/episodes/_ajax`
+      `https://www.m.imdb.com/title/${id}/episodes/_ajax`
     );
     let dom = parser.parseFromString(rawHtml);
 
@@ -43,7 +43,7 @@ export default async function seriesFetcher(id) {
             html = rawHtml;
           } else {
             html = await apiRequestRawHtml(
-              `https://www.imdb.com/title/${id}/episodes/?season=${season.id}`
+              `https://www.m.imdb.com/title/${id}/episodes/?season=${season.id}`
             );
           }
 
@@ -122,9 +122,9 @@ export function parseEpisodes(raw) {
 
         episodes.push({
           idx: index + 1,
-          no: title,
-          plot,
-          publishedDate,
+          title: title,
+          plot: plot,
+          publishedDate: publishedDate,
           rating: {
             count,
             star,

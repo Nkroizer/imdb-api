@@ -11,7 +11,7 @@ title.get("/:id", async (c) => {
 
   try {
     let parser = new DomParser();
-    let rawHtml = await apiRequestRawHtml(`https://www.imdb.com/title/${id}`);
+    let rawHtml = await apiRequestRawHtml(`https://www.m.imdb.com/title/${id}`);
 
     let dom = parser.parseFromString(rawHtml);
 
@@ -29,7 +29,7 @@ title.get("/:id", async (c) => {
     response.review_api_path = `/reviews/${id}`;
 
     // imdb link
-    response.imdb = `https://www.imdb.com/title/${id}`;
+    response.imdb = `https://www.m.imdb.com/title/${id}`;
 
     // content type
     response.contentType = schema["@type"];
@@ -133,7 +133,7 @@ title.get("/:id/season/:seasonId", async (c) => {
 
   try {
     const html = await apiRequestRawHtml(
-      `https://www.imdb.com/title/${id}/episodes/?season=${seasonId}`
+      `https://www.m.imdb.com/title/${id}/episodes/?season=${seasonId}`
     );
 
     const parsed = parseEpisodes(html);
@@ -141,7 +141,7 @@ title.get("/:id/season/:seasonId", async (c) => {
       {
         id,
         title_api_path: `/title/${id}`,
-        imdb: `https://www.imdb.com/title/${id}/episodes?season=${seasonId}`,
+        imdb: `https://www.m.imdb.com/title/${id}/episodes?season=${seasonId}`,
         season_id: seasonId,
       },
       parsed

@@ -22,7 +22,7 @@ reviews.get("/:id", async (c) => {
 
     let parser = new DomParser();
     let rawHtml = await apiRequestRawHtml(
-      `https://www.imdb.com/title/${id}/reviews/_ajax?sort=${
+      `https://www.m.imdb.com/title/${id}/reviews/_ajax?sort=${
         option.key
       }&dir=${sortOrder}${nextKey ? `&paginationKey=${nextKey}` : ""}`
     );
@@ -49,7 +49,7 @@ reviews.get("/:id", async (c) => {
           });
 
           review.authorUrl =
-            "https://www.imdb.com" +
+            "https://www.m.imdb.com" +
             author.getElementsByTagName("a")[0].getAttribute("href");
         } catch (_) {
           if (!review.author) review.author = "Anonymous";
@@ -120,7 +120,7 @@ reviews.get("/:id", async (c) => {
           };
         }
 
-        review.reviewLink = `https://www.imdb.com/review/${review.id}`;
+        review.reviewLink = `https://www.m.imdb.com/review/${review.id}`;
 
         reviews.push(review);
       } catch (__) {}
@@ -136,7 +136,7 @@ reviews.get("/:id", async (c) => {
 
     let result = {
       id,
-      imdb: `https://www.imdb.com/title/${id}`,
+      imdb: `https://www.m.imdb.com/title/${id}`,
       option: option.name,
       sortOrder,
       availableOptions: optionsMapper.map((option) => option.name),
