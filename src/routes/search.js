@@ -50,7 +50,7 @@ search.get("/", async (c) => {
           type: node.qid,
           ...imageObj,
           api_path: `/title/${node.id}`,
-          imdb: `https://www.m.imdb.com/title/${node.id}`,
+          imdb: `https://m.imdb.com/title/${node.id}`,
         });
       } catch (_) {
         console.log(_);

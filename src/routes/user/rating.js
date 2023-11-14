@@ -24,7 +24,7 @@ export default async function userRating(c) {
       ratingFilter: ratingFilter || undefined,
     });
 
-    const constructedUrl = `https://www.m.imdb.com/user/${userId}/ratings?${query}`;
+    const constructedUrl = `https://m.imdb.com/user/${userId}/ratings?${query}`;
 
     const response = await fetch(constructedUrl, {
       headers: {
@@ -113,7 +113,7 @@ async function parseReviews(userId) {
   try {
     let data = [];
     const rawHtml = await apiRequestRawHtml(
-      `https://www.m.imdb.com/user/${userId}/reviews`
+      `https://m.imdb.com/user/${userId}/reviews`
     );
 
     const parser = new DomParser();
@@ -142,7 +142,7 @@ async function parseReviews(userId) {
           date: review_date,
           heading: reviewTitle.textContent.trim(),
           content: reviewContent.textContent.trim(),
-          reviewLink: `https://www.m.imdb.com/review/${id}`,
+          reviewLink: `https://m.imdb.com/review/${id}`,
         });
       } catch (_) {
         console.error(`Reviews error:`, _);
@@ -167,7 +167,7 @@ function parseContent(node) {
     const titleId = titleUrl.match(/title\/(.*)\//)[1];
 
     object.id = titleId;
-    object.imdb = `https://www.m.imdb.com/title/${titleId}`;
+    object.imdb = `https://m.imdb.com/title/${titleId}`;
     object.api_path = `/title/${titleId}`;
     object.review_api_path = `/reviews/${titleId}`;
     object.title = title.textContent.trim();
