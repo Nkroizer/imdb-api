@@ -43,11 +43,11 @@ export default async function seriesFetcher(id) {
             html = rawHtml;
           } else {
             html = await apiRequestRawHtml(
-              `https://www.imdb.com/title/${id}/episodes/_ajax?season=${season.id}`
+              `https://www.imdb.com/title/${id}/episodes/?season=${season.id}`
             );
           }
 
-          let parsed = parseEpisodes(html, season.id);
+          let parsed = parseEpisodes(html);
           season.name = parsed.name;
           season.episodes = parsed.episodes;
         } catch (sfe) {
@@ -73,7 +73,7 @@ export default async function seriesFetcher(id) {
   };
 }
 
-export function parseEpisodes(raw, seasonId) {
+export function parseEpisodes(raw) {
   let parser = new DomParser();
   let dom = parser.parseFromString(raw);
 
@@ -82,53 +82,55 @@ export function parseEpisodes(raw, seasonId) {
 
   let episodes = [];
 
-let episodeList = dom.getElementsByClassName("episode-item-wrapper")
+  let episodeList = dom.getElementsByClassName("episode-item-wrapper")
 
   let index = 0
 
   for (let item of episodeList) {
     console.log("_________________________")
-    let iit = item.innerText.replace("TOP-RATED\n", "").replace(" ∙ ", "\n");
+    let iit = item && item.innerText ? item.innerText.replace("TOP-RATED\n", "").replace(" ∙ ", "\n") : "";
     let iita = iit.split("\n")
     try {
-      let title = null;
-      try {
-        title = iita[1]
-      } catch (_) { }
-  
-      let publishedDate = null;
-      try {
-        publishedDate = iita[2]
-      } catch (_) { }
-  
-      let plot = null;
-      try {
-        plot = iita[3]
-      } catch (_) { }
-  
-      let star = 0;
-      try {
-        star = iita[4]
-      } catch (_) { }
-  
-      let count = 0;
-      try {
-        count = iita[6] && iita[6].includes("(") ? trim(iita[6]).replace("(", "") : trim(iita[6]);
-        count = iita[6] && iita[6].includes(")") ? trim(iita[6]).replace(")", "") : trim(iita[6]);
-      } catch (_) { }
-  
-      index++
-  
-      episodes.push({
-        idx: index + 1,
-        no: title,
-        plot,
-        publishedDate,
-        rating: {
-          count,
-          star,
-        },
-      });
+      if (iita && iita.length > 0) {
+        let title = null;
+        try {
+          title = iita[1]
+        } catch (_) { }
+
+        let publishedDate = null;
+        try {
+          publishedDate = iita[2]
+        } catch (_) { }
+
+        let plot = null;
+        try {
+          plot = iita[3]
+        } catch (_) { }
+
+        let star = 0;
+        try {
+          star = iita[4]
+        } catch (_) { }
+
+        let count = 0;
+        try {
+          count = iita[6] && iita[6].includes("(") ? trim(iita[6]).replace("(", "") : trim(iita[6]);
+          count = iita[6] && iita[6].includes(")") ? trim(iita[6]).replace(")", "") : trim(iita[6]);
+        } catch (_) { }
+
+        index++
+
+        episodes.push({
+          idx: index + 1,
+          no: title,
+          plot,
+          publishedDate,
+          rating: {
+            count,
+            star,
+          },
+        });
+      }
     } catch (ss) {
       console.log(ss.message);
     }
