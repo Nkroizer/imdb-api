@@ -133,10 +133,10 @@ title.get("/:id/season/:seasonId", async (c) => {
 
   try {
     const html = await apiRequestRawHtml(
-      `https://www.m.imdb.com/title/${id}/episodes/_ajax?season=${seasonId}`
+      `https://www.m.imdb.com/title/${id}/episodes/?season=${seasonId}`
     );
 
-    const parsed = parseEpisodes(html, seasonId);
+    const parsed = parseEpisodes(html);
     const response = Object.assign(
       {
         id,
@@ -149,7 +149,7 @@ title.get("/:id/season/:seasonId", async (c) => {
 
     return c.json(response);
   } catch (error) {
-    c.status(500);
+    c.status(602);
     return c.json({
       message: error.message,
     });
