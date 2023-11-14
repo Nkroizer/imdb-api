@@ -134,7 +134,7 @@ let episodeList = dom.getElementsByClassName("episode-item-wrapper")
   }
 
   return {
-    name: name,
+    name: "sparkels",
     episodes: episodes,
   };
 }
