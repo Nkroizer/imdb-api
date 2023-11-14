@@ -77,8 +77,8 @@ export function parseEpisodes(raw, seasonId) {
   let parser = new DomParser();
   let dom = parser.parseFromString(raw);
 
-  let name = dom.getElementById("episode_top").textContent.trim();
-  name = entityDecoder(name, { level: "html5" });
+  // let name = dom.getElementById("episode_top").textContent.trim();
+  // name = entityDecoder(name, { level: "html5" });
 
   let episodes = [];
 
