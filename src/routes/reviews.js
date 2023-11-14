@@ -22,7 +22,7 @@ reviews.get("/:id", async (c) => {
 
     let parser = new DomParser();
     let rawHtml = await apiRequestRawHtml(
-      `https://www.m.imdb.com/title/${id}/reviews/_ajax?sort=${
+      `https://www.m.imdb.com/title/${id}/reviews/?sort=${
         option.key
       }&dir=${sortOrder}${nextKey ? `&paginationKey=${nextKey}` : ""}`
     );
