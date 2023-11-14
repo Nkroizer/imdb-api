@@ -133,7 +133,7 @@ title.get("/:id/season/:seasonId", async (c) => {
 
   try {
     const html = await apiRequestRawHtml(
-      `https://www.imdb.com/title/${id}/episodes/_ajax?season=${seasonId}`
+      `https://www.imdb.com/title/${id}/episodes/?season=${seasonId}`
     );
 
     const parsed = parseEpisodes(html, seasonId);
