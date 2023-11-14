@@ -11,7 +11,7 @@ export default async function seriesFetcher(id) {
   try {
     let parser = new DomParser();
     let rawHtml = await apiRequestRawHtml(
-      `https://www.m.imdb.com/title/${id}/episodes`
+      `https://www.m.imdb.com/title/${id}/episodes/`
     );
     let dom = parser.parseFromString(rawHtml);
 

@@ -141,7 +141,7 @@ title.get("/:id/season/:seasonId", async (c) => {
       {
         id,
         title_api_path: `/title/${id}`,
-        imdb: `https://www.m.imdb.com/title/${id}/episodes?season=${seasonId}`,
+        imdb: `https://www.m.imdb.com/title/${id}/episodes/?season=${seasonId}`,
         season_id: seasonId,
       },
       parsed
